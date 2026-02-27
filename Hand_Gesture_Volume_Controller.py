@@ -96,13 +96,30 @@ while True:
                 if prev_action != "mute":
                     pyautogui.press("volumemute")
                     prev_action = "mute"
+                # else:
+                #     pyautogui.press("volumemute")
+                #     prev_action = "unmute"
+                #     time.sleep(1)
 
             # 👉 Thumb + Index → Volume Control
             else:
                 dist = (((x2-x1)**2 + (y2-y1)**2)**0.5)//4
+                palm_x1 = int(hand[0].x * w)
+                palm_y1 = int(hand[0].y * h)
+
+                palm_x2 = int(hand[9].x * w)
+                plam_y2 = int(hand[9].y * h)
+
+                palm_size = (((palm_x2-palm_x1)**2 + (plam_y2-palm_y1)**2)**0.5)
+
+                if palm_size !=0:
+                    dist = dist/palm_size
+                else:
+                    dist = 0
+                
                 cv2.line(image,(x1,y1),(x2,y2),(0,255,0),4)
 
-                if dist > 30:
+                if dist > 0.3:
                     pyautogui.press("volumeup")
                 else:
                     pyautogui.press("volumedown")
