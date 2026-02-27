@@ -46,6 +46,7 @@ def fingers_up(hand):
 # -------------------------------
 x1=y1=x2=y2=0
 prev_action = ""
+is_muted = False
 
 # -------------------------------
 # Webcam Start
@@ -93,9 +94,15 @@ while True:
 
             # ✊ Fist → Mute
             elif total_fingers == 0:
-                if prev_action != "mute":
+                if prev_action != "fist":
                     pyautogui.press("volumemute")
-                    prev_action = "mute"
+                    is_muted = not is_muted
+                    if is_muted:
+                        print("Muted")
+                    else:
+                        print("Unmuted")
+                    prev_action = "fist"
+                    time.sleep(0.7)
                 # else:
                 #     pyautogui.press("volumemute")
                 #     prev_action = "unmute"
